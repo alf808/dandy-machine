@@ -1,0 +1,36 @@
+Udacity's course Intro to Machine Learning:
+https://www.udacity.com/course/viewer#!/c-ud120-nd
+
+Project starter code:
+https://github.com/udacity/ud120-projects.git
+
+Documentation:
+http://scikit-learn.org/stable/
+
+http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html
+
+http://scikit-learn.org/stable/modules/svm.html
+
+http://scikit-learn.org/stable/modules/tree.html
+
+http://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html
+
+http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
+
+http://scikit-learn.org/stable/modules/clustering.html
+
+http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
+
+http://scikit-learn.org/stable/modules/preprocessing.html
+
+http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html
+
+http://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html
+
+http://scikit-learn.org/stable/modules/cross_validation.html
+
+http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.train_test_split.html
+
+https://en.wikipedia.org/wiki/F1_score
+
+https://public.tableau.com/profile/diego2420#!/vizhome/Udacity/UdacityDashboard

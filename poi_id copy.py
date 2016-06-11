@@ -1,28 +1,20 @@
 #!/usr/bin/python
 
-import numpy as np
 import sys
 import pickle
-from pandas import DataFrame, Series
-import pandas as pd
 sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
 from tester import dump_classifier_and_data
-from explore_enron_data import enron_data_set
-
 
 ### Task 1: Select what features you'll use.
 ### features_list is a list of strings, each of which is a feature name.
 ### The first feature must be "poi".
-# features_list = ['poi','salary'] # You will need to use more features
-
-print enron_data_set()
-
+features_list = ['poi','salary'] # You will need to use more features
 
 ### Load the dictionary containing the dataset
-# with open("final_project_dataset.pkl", "r") as data_file:
-#     data_dict = pickle.load(data_file)
+with open("final_project_dataset.pkl", "r") as data_file:
+    data_dict = pickle.load(data_file)
 
 ### Task 2: Remove outliers
 ### Task 3: Create new feature(s)
