@@ -1,0 +1,28 @@
+Who are the masterminds and minor culprits behind the Enron scandal that resulted in stealing billions of dollars of retirement funds and losing billions of dollars more in stocks? With this project, I will attempt to determine who the Persons of Interests (POIs) are in this infamous corporate fraud. Using email and financial data that became public record, I will create a person of interest identifier (POI identifier) and assess the accuracy of the identifier based on which individuals played some role in the Enron scandal, i.e., who were indicted, settled with or testified for the prosecution.
+
+Dataset:
+The goal of this project is to use machine learning methods to create a model for identifying the POIs in the Enron scandal.
+
+The dataset combines email and finance data into a single dataset.
+- 146 data points
+- 21 features
+14 financial features: ['salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus', 'restricted_stock_deferred', 'deferred_income', 'total_stock_value', 'expenses', 'exercised_stock_options', 'other', 'long_term_incentive', 'restricted_stock', 'director_fees'] (all units are in US dollars)
+
+6 email features: ['to_messages', 'email_address', 'from_poi_to_this_person', 'from_messages', 'from_this_person_to_poi', 'shared_receipt_with_poi'] (units are generally number of emails messages; notable exception is ‘email_address’, which is a text string)
+
+POI label: [‘poi’] (boolean, represented as integer)
+- 18 of the data points are POIs. These are only 18 out of the 35 POIs determined by Udacity.
+
+
+Data points with certain features can be accessed in this manner, :
+enron_data['SKILLING JEFFREY K']['salary']
+can retrieve from dataset enron_data the data point Skilling and his salary.
+
+Outliers:
+As discussed in the outlier mini-project, with the scatter plot, it is evident that there are 5 outliers. A data item called 'TOTAL' is included as a spreadsheet quirk. Four data points are actual data from POIs, including Kenneth Lay and Jeffrey Skilling. Even though the concomitant values to these 4 outliers are extreme, I will include them since they are those of POIs. One other data point can be eliminated since it is not a person, namely 'THE TRAVEL AGENCY IN THE PARK'. So for this analysis, there will be total of 144 data points out of the original 146.
+
+Features:
+I eliminated the feature email_address immediately since it did not add value to the analysis and it also gave errors when executing the code.
+Upon initial run of the code with the minor changes above in the dataset and outliers, the accuracy was only 0.33467. This includes nearly all the features. To get better accuracy, I will attempt to scale, compound, or eliminate features.
+
+
