@@ -58,7 +58,7 @@ labels, features = targetFeatureSplit(data)
 # my_features_list = ['poi'] + list(k_best_features.feature.values)
 
 ## get k (k represents number of features) best features
-k = 10
+# k = 10
 # k_best_features = enron_tools.get_k_best(data_dict,features_list,k)
 
 # k_best = SelectKBest(k = k)
