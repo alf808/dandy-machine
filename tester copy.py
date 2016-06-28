@@ -12,36 +12,19 @@
 
 import pickle
 import sys
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
 from sklearn.cross_validation import StratifiedShuffleSplit
-sys.path.append("../tools/")
+sys.path.append("tools/")
 from feature_format import featureFormat, targetFeatureSplit
-from sklearn import preprocessing
-
 
 PERF_FORMAT_STRING = "\
 \tAccuracy: {:>0.{display_precision}f}\tPrecision: {:>0.{display_precision}f}\t\
 Recall: {:>0.{display_precision}f}\tF1: {:>0.{display_precision}f}\tF2: {:>0.{display_precision}f}"
-RESULTS_FORMAT_STRING = "\tTotal predictions: {:4d}\tTrue positives: {:4d}\tFalse positives: {:4d}\tFalse negatives: {:4d}\tTrue negatives: {:4d}"
+RESULTS_FORMAT_STRING = "\tTotal predictions: {:4d}\tTrue positives: {:4d}\tFalse positives: {:4d}\
+\tFalse negatives: {:4d}\tTrue negatives: {:4d}"
 
-def test_classifier2(clf, dataset, feature_list, folds = 1000,scale_features = True, std_features = False):
+def test_classifier(clf, dataset, feature_list, folds = 1000):
     data = featureFormat(dataset, feature_list, sort_keys = True)
-
-    
     labels, features = targetFeatureSplit(data)
-
-    #scale features if necessary
-    if scale_features == True:
-        scaler = preprocessing.MinMaxScaler()
-        features = scaler.fit_transform(features)
-
-    #standardize features for pca if necessary
-    if std_features == True:
-        std = preprocessing.StandardScaler()
-        features = preprocessing.StandardScaler().fit_transform(features)
-
-
     cv = StratifiedShuffleSplit(labels, folds, random_state = 42)
     true_negatives = 0
     false_negatives = 0
@@ -69,8 +52,13 @@ def test_classifier2(clf, dataset, feature_list, folds = 1000,scale_features = T
                 false_negatives += 1
             elif prediction == 1 and truth == 0:
                 false_positives += 1
-            else:
+            elif prediction == 1 and truth == 1:
                 true_positives += 1
+            else:
+                print "Warning: Found a predicted label not == 0 or 1."
+                print "All predictions should take value 0 or 1."
+                print "Evaluating performance for processed predictions:"
+                break
     try:
         total_predictions = true_negatives + false_negatives + false_positives + true_positives
         accuracy = 1.0*(true_positives + true_negatives)/total_predictions
@@ -82,23 +70,29 @@ def test_classifier2(clf, dataset, feature_list, folds = 1000,scale_features = T
         print PERF_FORMAT_STRING.format(accuracy, precision, recall, f1, f2, display_precision = 5)
         print RESULTS_FORMAT_STRING.format(total_predictions, true_positives, false_positives, false_negatives, true_negatives)
         print ""
-        return f1
     except:
         print "Got a divide by zero when trying out:", clf
+        print "Precision or recall may be undefined due to a lack of true positive predicitons."
 
 CLF_PICKLE_FILENAME = "my_classifier.pkl"
 DATASET_PICKLE_FILENAME = "my_dataset.pkl"
 FEATURE_LIST_FILENAME = "my_feature_list.pkl"
 
-def dump_classifier_and_data2(clf, dataset, feature_list):
-    pickle.dump(clf, open(CLF_PICKLE_FILENAME, "w") )
-    pickle.dump(dataset, open(DATASET_PICKLE_FILENAME, "w") )
-    pickle.dump(feature_list, open(FEATURE_LIST_FILENAME, "w") )
+def dump_classifier_and_data(clf, dataset, feature_list):
+    with open(CLF_PICKLE_FILENAME, "w") as clf_outfile:
+        pickle.dump(clf, clf_outfile)
+    with open(DATASET_PICKLE_FILENAME, "w") as dataset_outfile:
+        pickle.dump(dataset, dataset_outfile)
+    with open(FEATURE_LIST_FILENAME, "w") as featurelist_outfile:
+        pickle.dump(feature_list, featurelist_outfile)
 
-def load_classifier_and_data2():
-    clf = pickle.load(open(CLF_PICKLE_FILENAME, "r") )
-    dataset = pickle.load(open(DATASET_PICKLE_FILENAME, "r") )
-    feature_list = pickle.load(open(FEATURE_LIST_FILENAME, "r"))
+def load_classifier_and_data():
+    with open(CLF_PICKLE_FILENAME, "r") as clf_infile:
+        clf = pickle.load(clf_infile)
+    with open(DATASET_PICKLE_FILENAME, "r") as dataset_infile:
+        dataset = pickle.load(dataset_infile)
+    with open(FEATURE_LIST_FILENAME, "r") as featurelist_infile:
+        feature_list = pickle.load(featurelist_infile)
     return clf, dataset, feature_list
 
 def main():
