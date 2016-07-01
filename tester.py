@@ -74,6 +74,7 @@ def test_classifier(clf, dataset, feature_list, folds = 1000):
         print "Got a divide by zero when trying out:", clf
         print "Precision or recall may be undefined due to a lack of true positive predicitons."
 
+from sklearn import preprocessing
 def test_classifier_scaling(clf, dataset, feature_list, folds = 1000,scale_features = True, std_features = False):
     data = featureFormat(dataset, feature_list, sort_keys = True)
 
